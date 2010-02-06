@@ -3,25 +3,30 @@
     <property name="build.target.dir" value="release/" />
     <property name="build.output.dir" value="bin/" />
     <property name="build.src.dir" value="src/" />
+    <property name="build.lib.dir" value="lib/" />
     <property name="build.jar.file" value="de.dan_nrw.web.jar" />
 
-    <target name="create_target_dir">
+    <target name="init">
+        <delete dir="${build.output.dir}"/>
+        <mkdir dir="${build.output.dir}" />
+        <delete dir="${build.lib.dir}"/>
         <delete dir="${build.target.dir}"/>
+    </target>
+    <target name="create_target_dir">
         <mkdir dir="${build.target.dir}"/>
     </target>
-    <target name="clean_up">
-        <delete dir="${build.output.dir}"/>
-        <delete dir="${build.lib.dir}"/>
+    <target name="retrieve_deps" depends="init">
+        <ivy:retrieve conf="build" />
     </target>
-    <target name="retrieve_deps">
-        <ivy:retrieve />
-    </target>
-    <target name="build">
-        <mkdir dir="${build.output.dir}" />
+    <target name="build" depends="init, retrieve_deps">
         <javac srcdir="${build.src.dir}" 
-               destdir="${build.output.dir}" />
+               destdir="${build.output.dir}">
+        	<classpath>
+        	    <fileset dir="${build.lib.dir}" />
+        	</classpath>
+        </javac>
     </target>
-    <target name="create_signed_jar" depends="create_target_dir">
+    <target name="create_signed_jar" depends="build, create_target_dir">
         <jar destfile="${build.target.dir}/${build.jar.file}" filesetmanifest="mergewithoutmain">
             <fileset dir="${build.output.dir}"/>
             <fileset file="README" />
@@ -31,10 +36,19 @@
                  keystore="${sign.keypath}"
                  storepass="${sign.pass}" />
     </target>
-    <target name="copy_deps" depends="create_target_dir">
+    <target name="ivy_publish" depends="create_signed_jar">
+        <ivy:publish overwrite="true" 
+                     resolver="local"
+                     artifactspattern="${build.target.dir}/[organisation].[artifact].[ext]" />
+    </target>
+    <target name="copy_deps" depends="retrieve_deps, create_target_dir">
         <copy todir="${build.target.dir}">
            <fileset dir="${build.lib.dir}" excludes="*-sources*.jar, *-javadoc*.jar" />
         </copy>
     </target>
-    <target name="release" depends="clean_up, retrieve_deps, build, create_target_dir, copy_deps, create_signed_jar, clean_up" />
+    <target name="clean_up">
+        <delete dir="${build.output.dir}"/>
+        <delete dir="${build.lib.dir}"/>
+    </target>
+    <target name="release" depends="ivy_publish, copy_deps, clean_up" />
 </project>

@@ -33,7 +33,6 @@ import de.dan_nrw.web.HttpResponseHandler;
 
 /**
  * @author Daniel Czerwonk
- *
  */
 public class HttpResponseHandlerTests {
    
