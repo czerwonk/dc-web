@@ -5,7 +5,7 @@
         organisation="de.dan_nrw"
         module="web"
         status="integration"
-        revision="1.0.0" />
+        revision="1.0.1" />
     <configurations>
         <conf name="build" />
         <conf name="test" extends="build" />

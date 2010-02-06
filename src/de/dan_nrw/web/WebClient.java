@@ -28,6 +28,8 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import de.dan_nrw.web.UserAgent;
+
 
 /**
  * @author Daniel Czerwonk
@@ -41,7 +43,7 @@ public class WebClient {
      * Creates a new instance of WebClient
      * (uses Firefox 3 user agent signature as default)
      */
-    private WebClient() {
+    public WebClient() {
         this.userAgent = UserAgent.FIREFOX_3;
     }
     
@@ -49,7 +51,7 @@ public class WebClient {
      * Creates a new instance of WebClient
      * @param userAgent
      */
-    private WebClient(UserAgent userAgent) {
+    public WebClient(UserAgent userAgent) {
         super();
         
         this.userAgent = userAgent;
