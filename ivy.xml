@@ -8,7 +8,7 @@
         revision="1.0.1" />
     <configurations>
         <conf name="build" />
-        <conf name="test" extends="build" />
+        <conf name="test" extends="build" visibility="private" />
     </configurations>
 	<dependencies>
 	   <dependency org="org.apache.httpcomponents" name="httpclient" rev="latest.stable" />
