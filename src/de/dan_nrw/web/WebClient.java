@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.net.URI;
 
 import org.apache.http.ProtocolException;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -37,6 +39,7 @@ import de.dan_nrw.web.UserAgent;
 public class WebClient {
     
     private final UserAgent userAgent;
+    private Credentials credentials;
     
     
     /**
@@ -56,7 +59,23 @@ public class WebClient {
         
         this.userAgent = userAgent;
     }
+    
+    
+    /**
+     * Gets the credentials used for authentification
+     * @return
+     */
+    public Credentials getCredentials() {
+        return this.credentials;
+    }
 
+    /**
+     * Sets the credentials used for authentification
+     * @param credentials
+     */
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
 
     /**
      * Sends a http request and returns repsonse as string
@@ -105,6 +124,11 @@ public class WebClient {
         request.addHeader("User-agent", this.userAgent.getHeaderValue());
         
         DefaultHttpClient client = new DefaultHttpClient();
+        
+        if (this.credentials != null) {
+            client.getCredentialsProvider().setCredentials(AuthScope.ANY, this.credentials);
+        }
+        
         return client.execute(request, responseHandler);
     }
 }
