@@ -32,9 +32,9 @@ import de.dan_nrw.web.HttpResponseHandler;
 
 
 /**
- * @author Daniel Czerwonk
+ * @author Daniel Czerwonk <d.czerwonk@googlemail.com>
  */
-public class HttpResponseHandlerTests {
+public class HttpResponseHandlerTestSuite {
    
     @Test(expected=ClientProtocolException.class)
     public void handleResponse_should_throw_ClientProtocolException_on_status_code_higher_399() throws ClientProtocolException, IOException {

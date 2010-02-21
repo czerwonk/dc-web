@@ -30,9 +30,9 @@ import de.dan_nrw.web.WebClient;
 
 
 /**
- * @author Daniel Czerwonk
+ * @author Daniel Czerwonk <d.czerwonk@googlemail.com>
  */
-public class WebClientTests {
+public class WebClientTestSuite {
     
     @Test
     @SuppressWarnings("unchecked")
