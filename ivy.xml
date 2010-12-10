@@ -10,8 +10,9 @@
 		<conf name="test" extends="build" visibility="private" />
 	</configurations>
 	<dependencies>
-		<dependency org="org.apache.httpcomponents" name="httpclient" rev="latest.stable" />
-		<dependency org="junit" name="junit" rev="latest.stable" conf="test->default" />
-		<dependency org="org.mockito" name="mockito-core" rev="latest.stable" conf="test->default" />
+	   <dependency org="commons-codec" name="commons-codec" rev="1.3"/>
+	   <dependency org="org.apache.httpcomponents" name="httpclient" rev="4.0.3"/>
+	   <dependency org="junit" name="junit" rev="latest.stable" conf="test->default" />
+	   <dependency org="org.mockito" name="mockito-core" rev="latest.stable" conf="test->default" />
 	</dependencies>
 </ivy-module>
